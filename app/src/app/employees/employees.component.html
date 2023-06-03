@@ -1,0 +1,84 @@
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div id="filters-panel">
+            <h2 class="text-center">Filters</h2>
+            <form class="row g-3 mt-4 form-employe" [formGroup]="filtersForm" (ngSubmit)="filterEmployees()">
+
+              <div class="col-md-6">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+              </div>
+          
+              <div class="col-md-6">
+                <label for="department" class="form-label mb-0">Department:</label>
+                <select id="department" formControlName="department" class="form-select">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let department of departments" [value]="department">{{ department }}</option>
+                </select>
+              </div>
+          
+              <div class="col-md-2">
+                <label for="employment-date" class="form-label">Employment Date:</label>
+                <input type="date" class="form-control" id="employment-date" formControlName="employmentDate">
+              </div>
+          
+              <div class="col-md-2">
+                <label for="salary" class="form-label">Salary:</label>
+                <input type="number" class="form-control" id="salary" formControlName="salary">
+              </div>
+          
+              <div class="col-md-2">
+                <label for="experience" class="form-label">Experience:</label>
+                <select id="experience" formControlName="experience" class="form-select" >
+                  <option value="">Choose...</option>
+                  <option *ngFor="let exp of experiences" [value]="exp.value">{{ exp.label }}</option>
+                </select>
+              </div>
+          
+              <div class="col-12">
+                <div class="butuns d-flex justify-content-between">
+                  <button type="submit" class="btn btn-primary">Filter</button>
+                  <button type="button" class="btn btn-primary" (click)="clearFilters()">Clear All</button>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+ 
+
+<div class="container mt-5 mb-5 m-auto">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-12">
+            <div id="employee-table">
+                <h2 class="mb-4">Employee List</h2>
+                <table class="table table-striped">
+                  <thead class="text-center">
+                    <tr>
+                      <th>Name</th>
+                      <th>Department</th>
+                      <th>Employment Date</th>
+                      <th>Salary</th>
+                      <th>Experience</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr *ngFor="let employee of filteredEmployees">
+                      <td>{{ employee.name }}</td>
+                      <td>{{ employee.department }}</td>
+                      <td>{{ employee.employmentDate | date }}</td>
+                      <td>{{ employee.salary }}</td>
+                      <td>{{ getExperienceLabel(employee.experience) }}</td>
+                    </tr>
+                    <tr *ngIf="filteredEmployees.length === 0">
+                      <td colspan="5">No employees found.</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+  
+
